@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -44,10 +46,12 @@ class TicTacToe extends StatefulWidget {
 
 class _TicTacToe extends State<TicTacToe> {
   List<List<String>> _grid = [
-    ['O', '.', 'X'],
-    ['X', '.', 'O'],
-    ['O', '.', 'X']
+    ['.', '.', '.'],
+    ['.', '.', '.'],
+    ['.', '.', '.'],
   ];
+
+  bool _oTurn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -58,39 +62,62 @@ class _TicTacToe extends State<TicTacToe> {
               style: Theme.of(context).textTheme.headlineLarge),
         ),
         body: Center(
-            child: Container(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Turn: ${_oTurn ? 'O' : 'X'}',
+                style: Theme.of(context).textTheme.displaySmall),
+            SizedBox(
                 width: 300,
                 height: 300,
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, row) {
-                    return Container(
+                    return SizedBox(
                         width: 300,
                         height: 100,
                         child: ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, col) => Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .inversePrimary),
-                              width: 100,
-                              height: 100,
-                              child: Center(
-                                child: Text(_grid[row][col],
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge),
-                              )),
+                          itemBuilder: (context, col) => InkWell(
+                              onTap: () => {
+                                    if (_grid[row][col] == '.')
+                                      {
+                                        setState(() => _grid[row][col] =
+                                            _oTurn ? 'O' : 'X'),
+                                        setState(() {
+                                          _oTurn = !_oTurn;
+                                        })
+                                      }
+                                  },
+                              child: GridCell(value: _grid[row][col])),
                           itemCount: _grid[0].length,
                         ));
                   },
                   itemCount: _grid.length,
-                ))));
+                )),
+          ],
+        )));
+  }
+}
+
+class GridCell extends StatelessWidget {
+  const GridCell({super.key, required this.value});
+
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.primary),
+            color: Theme.of(context).colorScheme.inversePrimary),
+        width: 100,
+        height: 100,
+        child: Center(
+          child: Text(value == '.' ? '' : value,
+              style: Theme.of(context).textTheme.bodyLarge),
+        ));
   }
 }
 

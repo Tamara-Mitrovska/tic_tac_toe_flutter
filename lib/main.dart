@@ -121,14 +121,10 @@ class _TicTacToe extends State<TicTacToe> {
                                       {
                                         setState(() => _grid[row][col] =
                                             _oTurn ? 'O' : 'X'),
-                                        setState(() {
-                                          _oTurn = !_oTurn;
-                                        }),
+                                        _oTurn = !_oTurn,
                                         if (_isWinner(row, col))
                                           {
-                                            setState(() {
-                                              _winner = _grid[row][col];
-                                            })
+                                            _winner = _grid[row][col],
                                           }
                                       }
                                   },

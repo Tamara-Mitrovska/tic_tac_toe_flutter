@@ -94,7 +94,7 @@ class _TicTacToe extends State<TicTacToe> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           title: Text("Tic Tac Toe",
               style: Theme.of(context).textTheme.headlineLarge),
         ),
@@ -164,7 +164,7 @@ class GridCell extends StatelessWidget {
         height: 100,
         child: Center(
           child: Text(value == '.' ? '' : value,
-              style: Theme.of(context).textTheme.bodyLarge),
+              style: Theme.of(context).textTheme.displaySmall),
         ));
   }
 }

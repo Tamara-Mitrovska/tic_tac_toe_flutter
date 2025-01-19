@@ -73,10 +73,10 @@ class _TicTacToe extends State<TicTacToe> {
     bool rightDiagWin = row + col == n - 1;
     for (var i = 0; i < n; i++) {
       if (_grid[i][col] != value) {
-        rowWin = false;
+        columnWin = false;
       }
       if (_grid[row][i] != value) {
-        columnWin = false;
+        rowWin = false;
       }
       if (row == col && _grid[i][i] != value) {
         leftDiagWin = false;
